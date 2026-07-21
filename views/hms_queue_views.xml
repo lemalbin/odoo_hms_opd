@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hms_queue_list" model="ir.ui.view">
+        <field name="name">hms.queue.list</field>
+        <field name="model">hms.queue</field>
+        <field name="arch" type="xml">
+            <list string="OPD Queue"
+                  decoration-danger="triage_category == 'red'"
+                  decoration-warning="triage_category in ['yellow','orange']"
+                  decoration-muted="state in ['done','skipped']"
+                  default_order="priority desc, queue_number asc">
+                <field name="queue_number" string="Q#"/>
+                <field name="patient_id"/>
+                <field name="triage_category" string="Triage"
+                       decoration-danger="triage_category == 'red'"
+                       decoration-warning="triage_category in ['yellow','orange']"
+                       decoration-success="triage_category == 'green'"/>
+                <field name="doctor_id" string="Doctor"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'waiting'"
+                       decoration-warning="state == 'called'"
+                       decoration-success="state in ['in_progress','done']"
+                       decoration-muted="state == 'skipped'"/>
+                <field name="registered_at" string="Registered"/>
+                <field name="called_at" string="Called" optional="show"/>
+                <field name="wait_minutes" string="Wait (min)" optional="show"/>
+                <field name="priority" column_invisible="1"/>
+                <button name="action_call_patient" string="Call" type="object"
+                        class="btn-primary btn-sm" invisible="state != 'waiting'"/>
+                <button name="action_start_consult" string="Start" type="object"
+                        class="btn-success btn-sm" invisible="state != 'called'"/>
+                <button name="action_skip" string="Skip" type="object"
+                        class="btn-warning btn-sm" invisible="state not in ['waiting','called']"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_queue_form" model="ir.ui.view">
+        <field name="name">hms.queue.form</field>
+        <field name="model">hms.queue</field>
+        <field name="arch" type="xml">
+            <form string="Queue Entry">
+                <header>
+                    <button name="action_call_patient" string="Call Patient" type="object"
+                            class="btn-primary" invisible="state != 'waiting'"/>
+                    <button name="action_start_consult" string="Start Consultation" type="object"
+                            class="btn-success" invisible="state != 'called'"/>
+                    <button name="action_done" string="Done" type="object"
+                            class="btn-secondary" invisible="state != 'in_progress'"/>
+                    <button name="action_skip" string="Skip / No-show" type="object"
+                            class="btn-warning" invisible="state in ['done','skipped']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="waiting,called,in_progress,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="queue_number"/>
+                            <field name="queue_date"/>
+                            <field name="patient_id" readonly="1"/>
+                            <field name="visit_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="doctor_id"/>
+                            <field name="triage_category" readonly="1"/>
+                            <field name="priority"/>
+                        </group>
+                    </group>
+                    <group string="Timestamps">
+                        <field name="registered_at" readonly="1"/>
+                        <field name="called_at" readonly="1"/>
+                        <field name="started_at" readonly="1"/>
+                        <field name="completed_at" readonly="1"/>
+                        <field name="wait_minutes" readonly="1" string="Wait Time (min)"/>
+                        <field name="consult_minutes" readonly="1" string="Consult Time (min)"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hms_queue_search" model="ir.ui.view">
+        <field name="name">hms.queue.search</field>
+        <field name="model">hms.queue</field>
+        <field name="arch" type="xml">
+            <search string="Queue">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <filter string="Today" name="today" domain="[('queue_date','=',context_today())]"/>
+                <filter string="Waiting" name="waiting" domain="[('state','=','waiting')]"/>
+                <filter string="Active" name="active"
+                        domain="[('state','in',['waiting','called','in_progress'])]"/>
+                <filter string="Red Priority" name="red"
+                        domain="[('triage_category','=','red')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Doctor" name="by_doctor" context="{'group_by': 'doctor_id'}"/>
+                    <filter string="Status" name="by_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hms_queue" model="ir.actions.act_window">
+        <field name="name">OPD Queue</field>
+        <field name="res_model">hms.queue</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_hms_queue_search"/>
+        <field name="context">{'search_default_today': 1, 'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No patients in queue today.</p>
+        </field>
+    </record>
+
+</odoo>

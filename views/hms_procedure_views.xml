@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══ Procedure List ═══ -->
+    <record id="view_hms_procedure_list" model="ir.ui.view">
+        <field name="name">hms.procedure.list</field>
+        <field name="model">hms.procedure</field>
+        <field name="arch" type="xml">
+            <list string="Procedures" decoration-success="state=='done'" decoration-muted="state=='cancelled'">
+                <field name="name"/>
+                <field name="procedure_date"/>
+                <field name="patient_id"/>
+                <field name="procedure_product_id"/>
+                <field name="performed_by_id" optional="show"/>
+                <field name="quantity" optional="hide"/>
+                <field name="unit_price" optional="show"/>
+                <field name="chargeable" widget="boolean_toggle" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state=='done'"
+                       decoration-warning="state=='ordered'"
+                       decoration-danger="state=='cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ═══ Procedure Form ═══ -->
+    <record id="view_hms_procedure_form" model="ir.ui.view">
+        <field name="name">hms.procedure.form</field>
+        <field name="model">hms.procedure</field>
+        <field name="arch" type="xml">
+            <form string="Procedure">
+                <header>
+                    <button name="action_done" string="Mark Done" type="object"
+                            class="btn-primary" invisible="state != 'ordered'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state != 'ordered'"/>
+                    <button name="action_reset" string="Reset to Ordered" type="object"
+                            invisible="state == 'ordered'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="ordered,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Procedure">
+                            <field name="opd_visit_id"/>
+                            <field name="patient_id" readonly="1"/>
+                            <field name="procedure_product_id"/>
+                            <field name="procedure_date"/>
+                            <field name="performed_by_id"/>
+                        </group>
+                        <group string="Billing">
+                            <field name="quantity"/>
+                            <field name="unit_price"/>
+                            <field name="chargeable"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Consumables Used" name="consumables">
+                            <field name="consumable_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Clinical Notes" name="notes">
+                            <field name="notes" placeholder="Procedure notes, site, findings..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ═══ Search ═══ -->
+    <record id="view_hms_procedure_search" model="ir.ui.view">
+        <field name="name">hms.procedure.search</field>
+        <field name="model">hms.procedure</field>
+        <field name="arch" type="xml">
+            <search string="Search Procedures">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="procedure_product_id"/>
+                <field name="performed_by_id"/>
+                <filter string="Ordered (Treatment Room)" name="ordered" domain="[('state','=','ordered')]"/>
+                <filter string="Done" name="done" domain="[('state','=','done')]"/>
+                <filter string="Today" name="today" domain="[('procedure_date','&gt;=',datetime.datetime.combine(context_today(),datetime.time(0,0,0)))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="by_state" context="{'group_by':'state'}"/>
+                    <filter string="Procedure" name="by_product" context="{'group_by':'procedure_product_id'}"/>
+                    <filter string="Performed By" name="by_performer" context="{'group_by':'performed_by_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ═══ Treatment Room queue (ordered, awaiting the nurse) ═══ -->
+    <record id="action_hms_procedure_treatment_room" model="ir.actions.act_window">
+        <field name="name">Treatment Room</field>
+        <field name="res_model">hms.procedure</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_hms_procedure_search"/>
+        <field name="context">{'search_default_ordered': 1, 'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No procedures waiting.</p>
+            <p>Ordered procedures (injections, dressings, etc.) appear here for the treatment-room nurse.</p>
+        </field>
+    </record>
+
+    <!-- ═══ All procedures ═══ -->
+    <record id="action_hms_procedure_all" model="ir.actions.act_window">
+        <field name="name">Procedures</field>
+        <field name="res_model">hms.procedure</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_hms_procedure_search"/>
+    </record>
+
+    <!-- ═══ Menu ═══ -->
+    <!-- Single Treatment Room entry, promoted to the top-level nav bar.
+         Defaults to today's ordered procedures; clear the filters to see all. -->
+    <menuitem id="menu_hms_treatment_room"
+              name="Treatment Room"
+              parent="menu_nest_hms_root"
+              action="action_hms_procedure_treatment_room"
+              sequence="30"/>
+
+</odoo>

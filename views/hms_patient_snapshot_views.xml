@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Read-only one-page clinical snapshot of a patient -->
+    <record id="view_hms_patient_snapshot" model="ir.ui.view">
+        <field name="name">hms.patient.snapshot</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <form string="Clinical Snapshot" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h3 style="color:#666;">
+                            <field name="patient_id" readonly="1" nolabel="1"/> &#8226;
+                            <field name="age_display" readonly="1" nolabel="1"/> &#8226;
+                            <field name="gender" readonly="1" nolabel="1"/>
+                        </h3>
+                    </div>
+                    <field name="clinical_snapshot" nolabel="1" readonly="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

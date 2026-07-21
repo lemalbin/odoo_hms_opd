@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Seed the OPD visit type. Add Dental, RCH, Maternity, Mortuary,
+             Ambulance, EMD from Configuration > Visit Types once those models
+             exist (res_model = the module's visit model). -->
+        <record id="visit_type_opd" model="hms.visit.type">
+            <field name="name">OPD Visit</field>
+            <field name="res_model">hms.opd.visit</field>
+            <field name="icon">fa-stethoscope</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Dental: referenced by model name only (no code dependency on the
+             dental module). Shows in the launcher only when hms.dental.visit
+             exists; otherwise hidden automatically. -->
+        <record id="visit_type_dental" model="hms.visit.type">
+            <field name="name">Dental Visit</field>
+            <field name="res_model">hms.dental.visit</field>
+            <field name="icon">fa-tooth</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- RCH entry points: referenced by model name only (no dependency on
+             nest_hms_rch). Each shows only when its model exists. -->
+        <record id="visit_type_anc" model="hms.visit.type">
+            <field name="name">ANC Visit</field>
+            <field name="res_model">hms.anc.visit</field>
+            <field name="icon">fa-baby-carriage</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="visit_type_pnc" model="hms.visit.type">
+            <field name="name">PNC Visit</field>
+            <field name="res_model">hms.pnc.visit</field>
+            <field name="icon">fa-child</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="visit_type_immunization" model="hms.visit.type">
+            <field name="name">Immunisation</field>
+            <field name="res_model">hms.immunization</field>
+            <field name="icon">fa-syringe</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="visit_type_family_planning" model="hms.visit.type">
+            <field name="name">Family Planning</field>
+            <field name="res_model">hms.family.planning</field>
+            <field name="icon">fa-venus-mars</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="visit_type_growth" model="hms.visit.type">
+            <field name="name">Growth Monitoring</field>
+            <field name="res_model">hms.growth.record</field>
+            <field name="icon">fa-line-chart</field>
+            <field name="sequence">70</field>
+        </record>
+
+    </data>
+</odoo>

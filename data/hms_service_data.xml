@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- noupdate=0: these standard categories are module-managed, so renames
+         apply on upgrade. Set the Income Account on each (Accounting tab) to
+         route revenue to the right Chart-of-Accounts line. -->
+    <data noupdate="0">
+
+        <record id="prod_categ_hospital_services" model="product.category">
+            <field name="name">Hospital Services</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <!-- OPD Consultations: provided in OPD only -->
+        <record id="prod_categ_opd_consultations" model="product.category">
+            <field name="name">OPD Consultations</field>
+            <field name="parent_id" ref="prod_categ_hospital_services"/>
+        </record>
+
+        <!-- Procedures: general (can be done in OPD, wards, EMD, etc.) -->
+        <record id="prod_categ_opd_procedures" model="product.category">
+            <field name="name">Procedures</field>
+            <field name="parent_id" ref="prod_categ_hospital_services"/>
+        </record>
+
+        <!-- Lab Tests: general -->
+        <record id="prod_categ_lab_tests" model="product.category">
+            <field name="name">Lab Tests</field>
+            <field name="parent_id" ref="prod_categ_hospital_services"/>
+        </record>
+
+    </data>
+</odoo>

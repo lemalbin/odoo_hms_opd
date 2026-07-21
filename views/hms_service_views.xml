@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Services catalogue: all billable service products (consultations,
+         procedures, and any other non-stock charges). Medicines are managed
+         separately under Pharmacy as storable products. -->
+    <!-- Custom list: Code (Internal Reference) shown up front -->
+    <record id="view_hms_service_product_list" model="ir.ui.view">
+        <field name="name">hms.service.product.list</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <list string="OPD Services" editable="bottom">
+                <field name="default_code" string="Code"/>
+                <field name="name" string="Service"/>
+                <field name="categ_id" string="Category"/>
+                <field name="list_price" string="Price (TZS)"/>
+                <field name="type" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_hms_services" model="ir.actions.act_window">
+        <field name="name">OPD Services / Procedures</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_hms_service_product_list"/>
+        <field name="domain">[('type', '=', 'service'), ('categ_id.complete_name', 'ilike', 'Hospital Services')]</field>
+        <field name="context">{'default_type': 'service', 'default_sale_ok': True, 'default_purchase_ok': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first service</p>
+            <p>Consultations, procedures and other chargeable services live here.
+               Group them by category (OPD Consultations, OPD Procedures, ...) and
+               set the Income Account on each category for accounting.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_hms_config_services"
+              name="Services / Procedures"
+              parent="menu_hms_opd_inventory"
+              action="action_hms_services"
+              sequence="10"/>
+
+</odoo>

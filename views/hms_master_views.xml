@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Tanzania Regions
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_hms_tz_region_list" model="ir.ui.view">
+        <field name="name">hms.tz.region.list</field>
+        <field name="model">hms.tz.region</field>
+        <field name="arch" type="xml">
+            <list string="Tanzania Regions">
+                <field name="code" width="60"/>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_tz_region_form" model="ir.ui.view">
+        <field name="name">hms.tz.region.form</field>
+        <field name="model">hms.tz.region</field>
+        <field name="arch" type="xml">
+            <form string="Tanzania Region">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hms_tz_region" model="ir.actions.act_window">
+        <field name="name">Tanzania Regions</field>
+        <field name="res_model">hms.tz.region</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Insurance Schemes
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_hms_insurance_scheme_list" model="ir.ui.view">
+        <field name="name">hms.insurance.scheme.list</field>
+        <field name="model">hms.insurance.scheme</field>
+        <field name="arch" type="xml">
+            <list string="Insurance Schemes">
+                <field name="name"/>
+                <field name="scheme_type"/>
+                <field name="claims_method"/>
+                <field name="avg_settlement_days" string="Avg Days"/>
+                <field name="pre_auth_required" string="Pre-auth"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_insurance_scheme_form" model="ir.ui.view">
+        <field name="name">hms.insurance.scheme.form</field>
+        <field name="model">hms.insurance.scheme</field>
+        <field name="arch" type="xml">
+            <form string="Insurance Scheme">
+                <sheet>
+                    <group string="Scheme Details">
+                        <field name="name"/>
+                        <field name="scheme_type"/>
+                        <field name="claims_method"/>
+                        <field name="avg_settlement_days"/>
+                        <field name="contact_email"/>
+                        <field name="contact_phone"/>
+                    </group>
+                    <group string="Pre-authorisation">
+                        <field name="pre_auth_required"/>
+                        <field name="pre_auth_threshold" invisible="not pre_auth_required"/>
+                    </group>
+                    <group string="Status">
+                        <field name="active"/>
+                    </group>
+                    <field name="notes" placeholder="Additional notes about this scheme..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hms_insurance_scheme" model="ir.actions.act_window">
+        <field name="name">Insurance Schemes</field>
+        <field name="res_model">hms.insurance.scheme</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══ Consolidated Department Requisition (OPD / IPD / RCH) ═══ -->
+    <record id="view_hms_dept_requisition_list" model="ir.ui.view">
+        <field name="name">hms.dept.requisition.list</field>
+        <field name="model">hms.dept.requisition</field>
+        <field name="arch" type="xml">
+            <list string="Requisitions" decoration-success="state=='transferred'" decoration-muted="state=='cancelled'">
+                <field name="name"/>
+                <field name="department"/>
+                <field name="requisition_date"/>
+                <field name="source_location_id"/>
+                <field name="destination_location_id"/>
+                <field name="state" widget="badge"
+                       decoration-success="state=='transferred'"
+                       decoration-warning="state in ('submitted','approved')"
+                       decoration-muted="state=='cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_dept_requisition_form" model="ir.ui.view">
+        <field name="name">hms.dept.requisition.form</field>
+        <field name="model">hms.dept.requisition</field>
+        <field name="arch" type="xml">
+            <form string="Department Requisition">
+                <header>
+                    <button name="action_submit" string="Submit" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'submitted'"/>
+                    <button name="action_receive" string="Receive Stock" type="object" class="btn-primary" invisible="state != 'approved'"/>
+                    <button name="action_view_transfer" string="View Transfer" type="object" invisible="not picking_id"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state in ('transferred','cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,transferred"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="department"/>
+                            <field name="requisition_date"/>
+                        </group>
+                        <group>
+                            <field name="source_location_id"/>
+                            <field name="destination_location_id"/>
+                            <field name="picking_id" readonly="1" invisible="not picking_id"/>
+                        </group>
+                    </group>
+                    <field name="line_ids" readonly="state not in ('draft','submitted')">
+                        <list editable="bottom">
+                            <field name="product_id"/>
+                            <field name="quantity_available" string="In Source" readonly="1"/>
+                            <field name="quantity_requested"/>
+                            <field name="quantity_approved"/>
+                        </list>
+                    </field>
+                    <p class="text-muted">
+                        A line can be any stockable item - medication, consumable or commodity.
+                    </p>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- OPD's own requisitions (each department gets its own filtered action) -->
+    <record id="action_hms_opd_dept_requisition" model="ir.actions.act_window">
+        <field name="name">Requisitions</field>
+        <field name="res_model">hms.dept.requisition</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('department', '=', 'opd')]</field>
+        <field name="context">{'default_department': 'opd'}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Patient Form View (standalone — hms.patient owned by nest_hms_opd)
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_hms_patient_form" model="ir.ui.view">
+        <field name="name">hms.patient.form</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <header>
+                    <button name="action_open_visit_launcher"
+                            string="New Visit"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'active'"/>
+                    <button name="action_register_opd_visit"
+                            string="Register OPD Visit"
+                            type="object"
+                            invisible="state != 'active' or has_active_visit"/>
+                    <button name="action_open_snapshot"
+                            string="Clinical Snapshot"
+                            type="object"
+                            class="btn-secondary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="active,inactive,deceased"/>
+                    <!-- Hidden field for active visit status -->
+                    <field name="has_active_visit" invisible="1"/>
+                </header>
+                <sheet>
+                    <!-- Alert banners -->
+                    <div class="alert alert-danger" role="alert" invisible="not has_allergies">
+                        <strong>⚠ ALLERGY ALERT:</strong>
+                        This patient has recorded allergies. Review before prescribing.
+                    </div>
+                    <div class="alert alert-info" role="alert" invisible="not is_paediatric">
+                        <strong>Paediatric Patient</strong>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not is_geriatric">
+                        <strong>Geriatric Patient — age ≥ 65</strong>
+                    </div>
+
+                    <!-- Smart buttons -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_opd_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-stethoscope">
+                            <field name="opd_visit_count" widget="statinfo" string="OPD Visits"/>
+                        </button>
+                    </div>
+
+                    <!-- Photo + Name -->
+                    <field name="photo" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Full Name"/></h1>
+                        <h4><field name="patient_id" readonly="1"/></h4>
+                    </div>
+
+                    <group>
+                        <group string="Identity">
+                            <field name="date_of_birth"/>
+                            <field name="age_display" readonly="1" string="Age"/>
+                            <field name="gender"/>
+                            <field name="blood_group"/>
+                            <field name="id_type"/>
+                            <field name="id_number"/>
+                            <!-- hidden flags used by alerts -->
+                            <field name="is_paediatric" invisible="1"/>
+                            <field name="is_geriatric" invisible="1"/>
+                            <field name="has_allergies" invisible="1"/>
+                        </group>
+                        <group string="Contact">
+                            <field name="phone" placeholder="+255 7XX XXX XXX"/>
+                            <field name="email"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Tanzania Location">
+                            <field name="region_id"/>
+                            <field name="district"/>
+                            <field name="ward"/>
+                            <field name="street_village"/>
+                        </group>
+                        <group string="Next of Kin">
+                            <field name="kin_name"/>
+                            <field name="kin_relationship"/>
+                            <field name="kin_phone"/>
+                        </group>
+                    </group>
+
+                    <group string="Emergency Contact">
+                        <group>
+                            <field name="emergency_contact"/>
+                            <field name="emergency_phone"/>
+                            <field name="emergency_relationship"/>
+                        </group>
+                    </group>
+
+                    <group string="Insurance Details">
+                        <group>
+                            <field name="insurance_scheme_id"/>
+                            <field name="nhif_number"/>
+                            <field name="insurance_policy_number"/>
+                            <field name="insurance_plan_tier"/>
+                            <field name="corporate_employer_id"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Allergies">
+                            <field name="allergy_ids" nolabel="1">
+                                <list editable="bottom">
+                                    <field name="allergen"/>
+                                    <field name="category"/>
+                                    <field name="reaction"/>
+                                    <field name="severity"
+                                           decoration-danger="severity == 'severe'"
+                                           decoration-warning="severity == 'moderate'"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Chronic Conditions">
+                            <field name="chronic_condition_ids" nolabel="1">
+                                <list editable="bottom">
+                                    <field name="condition"/>
+                                    <field name="icd10_code"/>
+                                    <field name="since"/>
+                                    <field name="status"/>
+                                    <field name="is_sensitive"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Clinical Notes">
+                            <field name="clinical_notes" nolabel="1" placeholder="Internal clinical notes…"/>
+                        </page>
+                        <page string="OPD History">
+                            <field name="opd_visit_ids" nolabel="1" readonly="1">
+                                <list>
+                                    <field name="name" string="Visit No."/>
+                                    <field name="visit_date"/>
+                                    <field name="visit_type"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Patient List View
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_hms_patient_list" model="ir.ui.view">
+        <field name="name">hms.patient.list</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <list string="Patients"
+                  decoration-danger="has_allergies == True">
+                <field name="patient_id" string="Patient ID"/>
+                <field name="name"/>
+                <field name="age_display" string="Age"/>
+                <field name="gender"/>
+                <field name="phone" optional="show"/>
+                <field name="nhif_number" optional="show"/>
+                <field name="nhif_number" optional="hide"/>
+                <field name="region_id" optional="hide"/>
+                <field name="opd_visit_count" string="OPD Visits" optional="show"/>
+                <field name="has_allergies" string="Allergy" optional="show"
+                       decoration-danger="has_allergies == True"/>
+                <field name="is_paediatric" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state == 'inactive'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_hms_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hms.patient</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hms_patient_search" model="ir.ui.view">
+        <field name="name">hms.patient.search</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <search string="Search Patients">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="phone"/>
+                <field name="nhif_number"/>
+                <field name="id_number"/>
+                <filter string="Active" name="active" domain="[('state','=','active')]"/>
+                <filter string="Paediatric" name="paediatric" domain="[('is_paediatric','=',True)]"/>
+                <filter string="Geriatric" name="geriatric" domain="[('is_geriatric','=',True)]"/>
+                <filter string="Has Allergies" name="has_allergies" domain="[('has_allergies','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Gender" name="by_gender" context="{'group_by': 'gender'}"/>
+
+                    <filter string="Region" name="by_region" context="{'group_by': 'region_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

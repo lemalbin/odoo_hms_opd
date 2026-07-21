@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         nestHMS — Root Menu
+    ═══════════════════════════════════════════════════════════ -->
+    <menuitem id="menu_nest_hms_root"
+              name="OPD"
+              sequence="1"
+              web_icon="nest_hms_opd,static/description/icon.png"
+              groups="nest_hms_opd.group_hms_receptionist"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         OPD — Second Level
+    ═══════════════════════════════════════════════════════════ -->
+    <menuitem id="menu_hms_opd"
+              name="OPD"
+              parent="menu_nest_hms_root"
+              sequence="10"
+              groups="nest_hms_opd.group_hms_receptionist"/>
+
+    <menuitem id="menu_hms_opd_today"
+              name="Visits"
+              parent="menu_hms_opd"
+              action="action_hms_opd_visit_today"
+              sequence="10"
+              groups="nest_hms_opd.group_hms_receptionist"/>
+
+    <menuitem id="menu_hms_queue"
+              name="Queue Board"
+              parent="menu_hms_opd"
+              action="action_hms_queue"
+              sequence="30"
+              groups="nest_hms_opd.group_hms_receptionist"/>
+
+    <!-- Triage: promoted to a top-level nav item (not inside the OPD dropdown) -->
+    <menuitem id="menu_hms_triage"
+              name="Triage"
+              parent="menu_nest_hms_root"
+              action="action_hms_triage"
+              sequence="20"
+              groups="nest_hms_opd.group_hms_nurse"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Inventory — catalogues (services/procedures) + OPD consumables store.
+         Consumables & Requisitions are added by hms_opd_consumable_views.xml.
+    ═══════════════════════════════════════════════════════════ -->
+    <menuitem id="menu_hms_opd_inventory"
+              name="Inventory"
+              parent="menu_nest_hms_root"
+              sequence="40"
+              groups="nest_hms_opd.group_hms_nurse"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Patient Registry — its OWN top-level app.
+         Model / views / action all still live in nest_hms_opd; only the
+         menu placement is standalone, so it shows as a separate home icon
+         instead of sitting inside OPD. No dependency change.
+    ═══════════════════════════════════════════════════════════ -->
+    <menuitem id="menu_hms_patient_root"
+              name="Patients"
+              sequence="2"
+              web_icon="nest_hms_opd,static/description/icon.png"
+              groups="nest_hms_opd.group_hms_receptionist"/>
+
+    <menuitem id="menu_hms_patients_all"
+              name="Patient Registry"
+              parent="menu_hms_patient_root"
+              action="nest_hms_opd.action_hms_patient"
+              sequence="10"
+              groups="nest_hms_opd.group_hms_receptionist"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Configuration — Second Level (Managers only)
+    ═══════════════════════════════════════════════════════════ -->
+    <menuitem id="menu_hms_config"
+              name="Configuration"
+              parent="menu_nest_hms_root"
+              sequence="100"
+              groups="nest_hms_opd.group_hms_manager"/>
+
+    <menuitem id="menu_hms_config_regions"
+              name="Tanzania Regions"
+              parent="menu_hms_config"
+              action="action_hms_tz_region"
+              sequence="10"
+              groups="nest_hms_opd.group_hms_manager"/>
+
+    <menuitem id="menu_hms_config_insurance"
+              name="Insurance Schemes"
+              parent="menu_hms_config"
+              action="action_hms_insurance_scheme"
+              sequence="20"
+              groups="nest_hms_opd.group_hms_manager"/>
+
+</odoo>

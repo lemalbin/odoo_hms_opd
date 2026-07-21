@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hms_register_visit_wizard" model="ir.ui.view">
+        <field name="name">hms.register.visit.wizard.form</field>
+        <field name="model">hms.register.visit.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Register OPD Visit">
+                <sheet>
+                    <group string="Step 1 — Find Patient">
+                        <field name="search_phone" placeholder="Enter phone or NHIF number to search..."/>
+                        <field name="patient_id" invisible="is_new_patient"
+                               options="{'no_create': True}"/>
+                        <field name="is_new_patient"/>
+                    </group>
+
+                    <group string="New Patient Details" invisible="not is_new_patient">
+                        <group>
+                            <field name="new_name"/>
+                            <field name="new_gender"/>
+                            <field name="new_dob"/>
+                            <field name="new_phone"/>
+                        </group>
+                        <group>
+                            <field name="new_id_type"/>
+                            <field name="new_id_number"/>
+                            <field name="new_nhif_number"/>
+                        </group>
+                    </group>
+
+                    <group string="Step 2 — Visit Details">
+                        <field name="visit_type"/>
+                        <field name="department"/>
+                        <field name="attending_doctor_id" domain="[('is_clinical_staff', '=', True)]"/>
+                        <field name="chief_complaint" placeholder="Brief chief complaint (optional)"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_register" string="Register &amp; Open Visit"
+                            type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hms_register_visit_wizard" model="ir.actions.act_window">
+        <field name="name">Register OPD Visit</field>
+        <field name="res_model">hms.register.visit.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Registration now flows through the Patients app > New Visit launcher,
+         so the standalone Register Visit menu is retired. The wizard/action
+         remain available for any button that still calls them. -->
+
+</odoo>

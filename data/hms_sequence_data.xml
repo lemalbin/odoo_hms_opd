@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Patient sequence: HMS-PT-00001 -->
+        <record id="seq_hms_patient" model="ir.sequence">
+            <field name="name">nestHMS Patient</field>
+            <field name="code">hms.patient</field>
+            <field name="prefix">HMS-PT-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range">False</field>
+        </record>
+
+        <!-- OPD Visit sequence: OPD-2026-00001 -->
+        <record id="seq_hms_opd_visit" model="ir.sequence">
+            <field name="name">nestHMS OPD Visit</field>
+            <field name="code">hms.opd.visit</field>
+            <field name="prefix">OPD-%(year)s-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range">False</field>
+        </record>
+
+        <!-- Procedure sequence: PRC-2026-00001 -->
+        <record id="seq_hms_procedure" model="ir.sequence">
+            <field name="name">nestHMS Procedure</field>
+            <field name="code">hms.procedure</field>
+            <field name="prefix">PRC-%(year)s-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="use_date_range">False</field>
+        </record>
+
+    </data>
+</odoo>

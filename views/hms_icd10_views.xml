@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hms_icd10_list" model="ir.ui.view">
+        <field name="name">hms.icd10.list</field>
+        <field name="model">hms.icd10</field>
+        <field name="arch" type="xml">
+            <list string="ICD-10 Codes" editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category" optional="show"/>
+                <field name="parent_id" optional="hide"/>
+                <field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_icd10_form" model="ir.ui.view">
+        <field name="name">hms.icd10.form</field>
+        <field name="model">hms.icd10</field>
+        <field name="arch" type="xml">
+            <form string="ICD-10 Code">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="category"/>
+                        <field name="parent_id"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hms_icd10_search" model="ir.ui.view">
+        <field name="name">hms.icd10.search</field>
+        <field name="model">hms.icd10</field>
+        <field name="arch" type="xml">
+            <search string="Search ICD-10">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category"/>
+                <group expand="0" string="Group By">
+                    <filter string="Category" name="by_category" context="{'group_by':'category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hms_icd10" model="ir.actions.act_window">
+        <field name="name">ICD-10 Codes</field>
+        <field name="res_model">hms.icd10</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_hms_icd10_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add your first ICD-10 code</p>
+            <p>A starter set of common codes is preloaded. To load the full WHO
+               ICD-10 list, use Favorites &gt; Import and map columns to Code and Description.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_hms_config_icd10"
+              name="ICD-10 Codes"
+              parent="menu_hms_config"
+              action="action_hms_icd10"
+              sequence="50"/>
+
+</odoo>

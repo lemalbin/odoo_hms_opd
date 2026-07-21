@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Tanzania Insurance Schemes -->
+        <record id="scheme_nhif" model="hms.insurance.scheme">
+            <field name="name">NHIF — National Health Insurance Fund</field>
+            <field name="scheme_type">nhif</field>
+            <field name="claims_method">NHIF eClaims Portal</field>
+            <field name="avg_settlement_days">30</field>
+            <field name="pre_auth_required">True</field>
+            <field name="pre_auth_threshold">500000</field>
+        </record>
+
+        <record id="scheme_chf" model="hms.insurance.scheme">
+            <field name="name">CHF — Community Health Fund</field>
+            <field name="scheme_type">chf</field>
+            <field name="claims_method">District Council Portal</field>
+            <field name="avg_settlement_days">45</field>
+            <field name="pre_auth_required">False</field>
+        </record>
+
+        <record id="scheme_jubilee" model="hms.insurance.scheme">
+            <field name="name">Jubilee Insurance</field>
+            <field name="scheme_type">private</field>
+            <field name="claims_method">Web Portal / EDI</field>
+            <field name="avg_settlement_days">14</field>
+            <field name="pre_auth_required">True</field>
+            <field name="pre_auth_threshold">300000</field>
+        </record>
+
+        <record id="scheme_aar" model="hms.insurance.scheme">
+            <field name="name">AAR Insurance</field>
+            <field name="scheme_type">private</field>
+            <field name="claims_method">Web Portal</field>
+            <field name="avg_settlement_days">21</field>
+            <field name="pre_auth_required">True</field>
+            <field name="pre_auth_threshold">200000</field>
+        </record>
+
+        <record id="scheme_britam" model="hms.insurance.scheme">
+            <field name="name">Britam Insurance</field>
+            <field name="scheme_type">private</field>
+            <field name="claims_method">Portal</field>
+            <field name="avg_settlement_days">21</field>
+            <field name="pre_auth_required">True</field>
+            <field name="pre_auth_threshold">200000</field>
+        </record>
+
+        <record id="scheme_alliance" model="hms.insurance.scheme">
+            <field name="name">Alliance Insurance</field>
+            <field name="scheme_type">private</field>
+            <field name="claims_method">Email / Portal</field>
+            <field name="avg_settlement_days">30</field>
+            <field name="pre_auth_required">True</field>
+            <field name="pre_auth_threshold">300000</field>
+        </record>
+
+        <record id="scheme_resolution" model="hms.insurance.scheme">
+            <field name="name">Resolution Insurance</field>
+            <field name="scheme_type">private</field>
+            <field name="claims_method">Portal</field>
+            <field name="avg_settlement_days">21</field>
+            <field name="pre_auth_required">True</field>
+            <field name="pre_auth_threshold">200000</field>
+        </record>
+
+        <record id="scheme_corporate" model="hms.insurance.scheme">
+            <field name="name">Corporate Self-insured</field>
+            <field name="scheme_type">corporate</field>
+            <field name="claims_method">Monthly Statement to Employer</field>
+            <field name="avg_settlement_days">30</field>
+            <field name="pre_auth_required">False</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ================================================================
+             Common Tanzania OPD ICD-10 diagnoses (WHO ICD-10, public domain).
+             This is a starter set. For the full catalogue, import the WHO
+             ICD-10 CSV from Configuration > ICD-10 Codes (Favorites > Import).
+             ================================================================ -->
+
+        <!-- Infectious & parasitic -->
+        <record id="icd10_b54" model="hms.icd10"><field name="code">B54</field><field name="name">Malaria, unspecified</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_b50" model="hms.icd10"><field name="code">B50</field><field name="name">Plasmodium falciparum malaria</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_a09" model="hms.icd10"><field name="code">A09</field><field name="name">Diarrhoea and gastroenteritis of infectious origin</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_a01_0" model="hms.icd10"><field name="code">A01.0</field><field name="name">Typhoid fever</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_a00" model="hms.icd10"><field name="code">A00</field><field name="name">Cholera</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_a15" model="hms.icd10"><field name="code">A15</field><field name="name">Respiratory tuberculosis, bacteriologically confirmed</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_b20" model="hms.icd10"><field name="code">B20</field><field name="name">HIV disease resulting in infectious/parasitic diseases</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_z21" model="hms.icd10"><field name="code">Z21</field><field name="name">Asymptomatic HIV infection status</field><field name="category">Factors influencing health status</field></record>
+        <record id="icd10_b35" model="hms.icd10"><field name="code">B35</field><field name="name">Dermatophytosis (ringworm)</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_b86" model="hms.icd10"><field name="code">B86</field><field name="name">Scabies</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_b01" model="hms.icd10"><field name="code">B01</field><field name="name">Varicella (chickenpox)</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_b05" model="hms.icd10"><field name="code">B05</field><field name="name">Measles</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_a54" model="hms.icd10"><field name="code">A54</field><field name="name">Gonococcal infection</field><field name="category">Infectious &amp; parasitic</field></record>
+        <record id="icd10_a53" model="hms.icd10"><field name="code">A53</field><field name="name">Syphilis, unspecified</field><field name="category">Infectious &amp; parasitic</field></record>
+
+        <!-- Respiratory -->
+        <record id="icd10_j00" model="hms.icd10"><field name="code">J00</field><field name="name">Acute nasopharyngitis (common cold)</field><field name="category">Respiratory</field></record>
+        <record id="icd10_j06_9" model="hms.icd10"><field name="code">J06.9</field><field name="name">Acute upper respiratory infection, unspecified</field><field name="category">Respiratory</field></record>
+        <record id="icd10_j02_9" model="hms.icd10"><field name="code">J02.9</field><field name="name">Acute pharyngitis, unspecified</field><field name="category">Respiratory</field></record>
+        <record id="icd10_j03_9" model="hms.icd10"><field name="code">J03.9</field><field name="name">Acute tonsillitis, unspecified</field><field name="category">Respiratory</field></record>
+        <record id="icd10_j18_9" model="hms.icd10"><field name="code">J18.9</field><field name="name">Pneumonia, unspecified</field><field name="category">Respiratory</field></record>
+        <record id="icd10_j20" model="hms.icd10"><field name="code">J20</field><field name="name">Acute bronchitis</field><field name="category">Respiratory</field></record>
+        <record id="icd10_j45" model="hms.icd10"><field name="code">J45</field><field name="name">Asthma</field><field name="category">Respiratory</field></record>
+
+        <!-- Digestive -->
+        <record id="icd10_k29_7" model="hms.icd10"><field name="code">K29.7</field><field name="name">Gastritis, unspecified</field><field name="category">Digestive</field></record>
+        <record id="icd10_k30" model="hms.icd10"><field name="code">K30</field><field name="name">Functional dyspepsia</field><field name="category">Digestive</field></record>
+        <record id="icd10_k59_0" model="hms.icd10"><field name="code">K59.0</field><field name="name">Constipation</field><field name="category">Digestive</field></record>
+
+        <!-- Genitourinary -->
+        <record id="icd10_n39_0" model="hms.icd10"><field name="code">N39.0</field><field name="name">Urinary tract infection, site not specified</field><field name="category">Genitourinary</field></record>
+        <record id="icd10_n30" model="hms.icd10"><field name="code">N30</field><field name="name">Cystitis</field><field name="category">Genitourinary</field></record>
+        <record id="icd10_n73" model="hms.icd10"><field name="code">N73</field><field name="name">Other female pelvic inflammatory disease</field><field name="category">Genitourinary</field></record>
+
+        <!-- Circulatory / Endocrine / Blood -->
+        <record id="icd10_i10" model="hms.icd10"><field name="code">I10</field><field name="name">Essential (primary) hypertension</field><field name="category">Circulatory</field></record>
+        <record id="icd10_e11" model="hms.icd10"><field name="code">E11</field><field name="name">Type 2 diabetes mellitus</field><field name="category">Endocrine</field></record>
+        <record id="icd10_e10" model="hms.icd10"><field name="code">E10</field><field name="name">Type 1 diabetes mellitus</field><field name="category">Endocrine</field></record>
+        <record id="icd10_d50_9" model="hms.icd10"><field name="code">D50.9</field><field name="name">Iron deficiency anaemia, unspecified</field><field name="category">Blood</field></record>
+        <record id="icd10_d64_9" model="hms.icd10"><field name="code">D64.9</field><field name="name">Anaemia, unspecified</field><field name="category">Blood</field></record>
+        <record id="icd10_e86" model="hms.icd10"><field name="code">E86</field><field name="name">Volume depletion (dehydration)</field><field name="category">Endocrine</field></record>
+
+        <!-- Skin / Allergy -->
+        <record id="icd10_l23" model="hms.icd10"><field name="code">L23</field><field name="name">Allergic contact dermatitis</field><field name="category">Skin</field></record>
+        <record id="icd10_l50" model="hms.icd10"><field name="code">L50</field><field name="name">Urticaria</field><field name="category">Skin</field></record>
+
+        <!-- Eye / Ear -->
+        <record id="icd10_h10" model="hms.icd10"><field name="code">H10</field><field name="name">Conjunctivitis</field><field name="category">Eye</field></record>
+        <record id="icd10_h66" model="hms.icd10"><field name="code">H66</field><field name="name">Suppurative and unspecified otitis media</field><field name="category">Ear</field></record>
+
+        <!-- Musculoskeletal / Nervous / Symptoms -->
+        <record id="icd10_m54_5" model="hms.icd10"><field name="code">M54.5</field><field name="name">Low back pain</field><field name="category">Musculoskeletal</field></record>
+        <record id="icd10_m79_1" model="hms.icd10"><field name="code">M79.1</field><field name="name">Myalgia</field><field name="category">Musculoskeletal</field></record>
+        <record id="icd10_g43" model="hms.icd10"><field name="code">G43</field><field name="name">Migraine</field><field name="category">Nervous</field></record>
+        <record id="icd10_r51" model="hms.icd10"><field name="code">R51</field><field name="name">Headache</field><field name="category">Symptoms &amp; signs</field></record>
+        <record id="icd10_r50_9" model="hms.icd10"><field name="code">R50.9</field><field name="name">Fever, unspecified</field><field name="category">Symptoms &amp; signs</field></record>
+        <record id="icd10_r10_4" model="hms.icd10"><field name="code">R10.4</field><field name="name">Other and unspecified abdominal pain</field><field name="category">Symptoms &amp; signs</field></record>
+        <record id="icd10_r05" model="hms.icd10"><field name="code">R05</field><field name="name">Cough</field><field name="category">Symptoms &amp; signs</field></record>
+        <record id="icd10_r11" model="hms.icd10"><field name="code">R11</field><field name="name">Nausea and vomiting</field><field name="category">Symptoms &amp; signs</field></record>
+
+        <!-- Pregnancy / General -->
+        <record id="icd10_z34" model="hms.icd10"><field name="code">Z34</field><field name="name">Supervision of normal pregnancy</field><field name="category">Factors influencing health status</field></record>
+        <record id="icd10_z00_0" model="hms.icd10"><field name="code">Z00.0</field><field name="name">General adult medical examination</field><field name="category">Factors influencing health status</field></record>
+
+        <!-- Injury -->
+        <record id="icd10_t14" model="hms.icd10"><field name="code">T14</field><field name="name">Injury of unspecified body region</field><field name="category">Injury</field></record>
+
+    </data>
+</odoo>

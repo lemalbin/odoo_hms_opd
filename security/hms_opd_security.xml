@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ═══════════════════════════════════════════
+             nestHMS Security Category
+        ═══════════════════════════════════════════ -->
+        <record id="module_category_nest_hms" model="ir.module.category">
+            <field name="name">nestHMS</field>
+            <field name="description">Hospital Information System — nestHMS</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- ═══════════════════════════════════════════
+             Security Groups
+        ═══════════════════════════════════════════ -->
+
+        <!-- Receptionist: register patients, create visits, view queue -->
+        <record id="group_hms_receptionist" model="res.groups">
+            <field name="name">Receptionist</field>
+            <field name="category_id" ref="module_category_nest_hms"/>
+            <field name="comment">Can register patients, create OPD visits, manage queue. Cannot access clinical notes or billing.</field>
+        </record>
+
+        <!-- Nurse: everything receptionist can do + triage + vitals -->
+        <record id="group_hms_nurse" model="res.groups">
+            <field name="name">Nurse / Clinical Officer</field>
+            <field name="category_id" ref="module_category_nest_hms"/>
+            <field name="implied_ids" eval="[(4, ref('group_hms_receptionist'))]"/>
+            <field name="comment">Can perform triage, record vitals, and update patient clinical flags.</field>
+        </record>
+
+        <!-- Doctor: full clinical access including diagnosis and discharge -->
+        <record id="group_hms_doctor" model="res.groups">
+            <field name="name">Doctor / Clinician</field>
+            <field name="category_id" ref="module_category_nest_hms"/>
+            <field name="implied_ids" eval="[(4, ref('group_hms_nurse'))]"/>
+            <field name="comment">Full clinical access — consultations, diagnoses, prescriptions, discharge.</field>
+        </record>
+
+        <!-- Manager / Medical Superintendent: full access + configuration -->
+        <record id="group_hms_manager" model="res.groups">
+            <field name="name">HMS Manager</field>
+            <field name="category_id" ref="module_category_nest_hms"/>
+            <field name="implied_ids" eval="[(4, ref('group_hms_doctor'))]"/>
+            <field name="comment">Full system access including configuration, reports and audit logs.</field>
+        </record>
+
+    </data>
+</odoo>

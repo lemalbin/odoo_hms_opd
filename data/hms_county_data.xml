@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Tanzania's 31 Administrative Regions -->
+        <record id="region_arusha"           model="hms.tz.region"><field name="name">Arusha</field>          <field name="code">01</field></record>
+        <record id="region_dar_es_salaam"    model="hms.tz.region"><field name="name">Dar es Salaam</field>   <field name="code">02</field></record>
+        <record id="region_dodoma"           model="hms.tz.region"><field name="name">Dodoma</field>          <field name="code">03</field></record>
+        <record id="region_geita"            model="hms.tz.region"><field name="name">Geita</field>           <field name="code">04</field></record>
+        <record id="region_iringa"           model="hms.tz.region"><field name="name">Iringa</field>          <field name="code">05</field></record>
+        <record id="region_kagera"           model="hms.tz.region"><field name="name">Kagera</field>          <field name="code">06</field></record>
+        <record id="region_katavi"           model="hms.tz.region"><field name="name">Katavi</field>          <field name="code">07</field></record>
+        <record id="region_kigoma"           model="hms.tz.region"><field name="name">Kigoma</field>          <field name="code">08</field></record>
+        <record id="region_kilimanjaro"      model="hms.tz.region"><field name="name">Kilimanjaro</field>     <field name="code">09</field></record>
+        <record id="region_lindi"            model="hms.tz.region"><field name="name">Lindi</field>           <field name="code">10</field></record>
+        <record id="region_manyara"          model="hms.tz.region"><field name="name">Manyara</field>         <field name="code">11</field></record>
+        <record id="region_mara"             model="hms.tz.region"><field name="name">Mara</field>            <field name="code">12</field></record>
+        <record id="region_mbeya"            model="hms.tz.region"><field name="name">Mbeya</field>           <field name="code">13</field></record>
+        <record id="region_mjini_magharibi"  model="hms.tz.region"><field name="name">Mjini Magharibi</field> <field name="code">14</field></record>
+        <record id="region_morogoro"         model="hms.tz.region"><field name="name">Morogoro</field>        <field name="code">15</field></record>
+        <record id="region_mtwara"           model="hms.tz.region"><field name="name">Mtwara</field>          <field name="code">16</field></record>
+        <record id="region_mwanza"           model="hms.tz.region"><field name="name">Mwanza</field>          <field name="code">17</field></record>
+        <record id="region_njombe"           model="hms.tz.region"><field name="name">Njombe</field>          <field name="code">18</field></record>
+        <record id="region_pemba_kaskazini"  model="hms.tz.region"><field name="name">Pemba Kaskazini</field> <field name="code">19</field></record>
+        <record id="region_pemba_kusini"     model="hms.tz.region"><field name="name">Pemba Kusini</field>    <field name="code">20</field></record>
+        <record id="region_pwani"            model="hms.tz.region"><field name="name">Pwani</field>           <field name="code">21</field></record>
+        <record id="region_rukwa"            model="hms.tz.region"><field name="name">Rukwa</field>           <field name="code">22</field></record>
+        <record id="region_ruvuma"           model="hms.tz.region"><field name="name">Ruvuma</field>          <field name="code">23</field></record>
+        <record id="region_shinyanga"        model="hms.tz.region"><field name="name">Shinyanga</field>       <field name="code">24</field></record>
+        <record id="region_simiyu"           model="hms.tz.region"><field name="name">Simiyu</field>          <field name="code">25</field></record>
+        <record id="region_singida"          model="hms.tz.region"><field name="name">Singida</field>         <field name="code">26</field></record>
+        <record id="region_songwe"           model="hms.tz.region"><field name="name">Songwe</field>          <field name="code">27</field></record>
+        <record id="region_tabora"           model="hms.tz.region"><field name="name">Tabora</field>          <field name="code">28</field></record>
+        <record id="region_tanga"            model="hms.tz.region"><field name="name">Tanga</field>           <field name="code">29</field></record>
+        <record id="region_unguja_kaskazini" model="hms.tz.region"><field name="name">Unguja Kaskazini</field><field name="code">30</field></record>
+        <record id="region_unguja_kusini"    model="hms.tz.region"><field name="name">Unguja Kusini</field>   <field name="code">31</field></record>
+
+    </data>
+</odoo>

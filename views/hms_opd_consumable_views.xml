@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══ Consumable master + stock levels ═══ -->
+    <record id="view_hms_opd_consumable_list" model="ir.ui.view">
+        <field name="name">hms.opd.consumable.list</field>
+        <field name="model">hms.opd.consumable</field>
+        <field name="arch" type="xml">
+            <list string="OPD Consumables" decoration-danger="below_reorder">
+                <field name="code" optional="show"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="unit" optional="show"/>
+                <field name="qty_available" string="On Hand"/>
+                <field name="reorder_level" optional="show"/>
+                <field name="below_reorder" string="Low" widget="boolean_toggle" readonly="1" optional="show"/>
+                <field name="product_id" optional="hide"/>
+                <button name="action_view_stock_moves" type="object" string="History"
+                        icon="fa-history" invisible="not product_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_opd_consumable_form" model="ir.ui.view">
+        <field name="name">hms.opd.consumable.form</field>
+        <field name="model">hms.opd.consumable</field>
+        <field name="arch" type="xml">
+            <form string="OPD Consumable">
+                <header>
+                    <button name="action_create_product" type="object" string="Create Stock Product"
+                            class="btn-primary" invisible="product_id != False"/>
+                    <button name="action_view_stock_moves" type="object" string="Stock History"
+                            class="btn-secondary" invisible="not product_id"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="category"/>
+                            <field name="unit"/>
+                            <field name="track_expiry"/>
+                        </group>
+                        <group>
+                            <field name="product_id" readonly="1"/>
+                            <field name="qty_available"/>
+                            <field name="reorder_level"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hms_opd_consumable" model="ir.actions.act_window">
+        <field name="name">Consumables &amp; Levels</field>
+        <field name="res_model">hms.opd.consumable</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Requisitions are handled by the consolidated hms.dept.requisition
+         (see hms_dept_requisition_views.xml). -->
+
+    <!-- ═══ Consumables used on the OPD visit form ═══ -->
+    <record id="view_hms_opd_visit_form_consumables" model="ir.ui.view">
+        <field name="name">hms.opd.visit.form.consumables</field>
+        <field name="model">hms.opd.visit</field>
+        <field name="inherit_id" ref="nest_hms_opd.view_hms_opd_visit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Consumables" name="opd_consumables">
+                    <field name="consumable_ids">
+                        <list editable="bottom">
+                            <field name="consumable_id"/>
+                            <field name="quantity"/>
+                            <field name="date_used"/>
+                            <field name="picking_id" readonly="1" optional="show"/>
+                            <field name="note" optional="show"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ═══ Menus (under Inventory) ═══ -->
+    <menuitem id="menu_hms_opd_consumables" name="Consumables &amp; Levels"
+              parent="menu_hms_opd_inventory" action="action_hms_opd_consumable" sequence="20"/>
+    <menuitem id="menu_hms_opd_requisitions" name="Requisitions"
+              parent="menu_hms_opd_inventory" action="action_hms_opd_dept_requisition" sequence="30"/>
+
+</odoo>
