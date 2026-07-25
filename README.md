@@ -74,8 +74,38 @@ odoo_hms_opd/
 
 ## Screenshots
 
-<!-- TODO: add screenshots — patient registration form, triage (colour acuity),
-     the queue board, a visit/consultation form with vitals, and the insurance schemes. -->
+**Today's OPD board** — every visit for the day with triage colour, attending doctor, queue
+number and payer type at a glance.
+
+![Today's OPD board](screenshots/01-todays-opd.png)
+
+**Triage — 5-level colour acuity**
+Red / Orange / Yellow / Green / Black with priority score, expected wait and mode of arrival.
+
+![Triage colour acuity](screenshots/02-triage.png)
+
+**Digital patient queue** — live queue ordered by acuity, with wait tracking and call/skip.
+
+![OPD queue board](screenshots/03-queue.png)
+
+**Consultation / visit record** — the full clinical workspace: vitals, consultation, clinical
+notes, diagnosis, procedures, management plan, prescriptions, radiology, lab and discharge.
+
+![Consultation form](screenshots/04-consultation.png)
+
+**Patient master record** — Tanzania-specific location, next-of-kin, emergency contact,
+insurance details, and allergy / chronic-condition / OPD-history tabs.
+
+![Patient master record](screenshots/05-patient-registration.png)
+
+**Insurance schemes** — NHIF, CHF and private payers with claims method, settlement days and
+pre-authorization rules.
+
+![Insurance schemes](screenshots/06-insurance-schemes.png)
+
+**ICD-10 diagnosis codes** — a preloaded, categorised code set for structured diagnosis.
+
+![ICD-10 codes](screenshots/07-icd10.png)
 
 ---
 
