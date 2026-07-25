@@ -1,13 +1,76 @@
-# nestHMS — OPD & Patient Registration (Odoo)
+# nestHMS — Outpatient Department (OPD) for Odoo 18
 
-The **Outpatient Department** module of **nestHMS**, a complete Hospital Management System
-built on Odoo and running in production in Tanzanian healthcare facilities. This module covers
-the full outpatient journey — **Registration → Triage → Queue → Consultation → Vitals →
-Diagnosis → Discharge** — with Tanzania-specific patient, insurance, and administrative data.
+> **A complete outpatient hospital system on Odoo 18 — patient registration to discharge, triage, queue, insurance and billing — running in production across two healthcare facilities in Tanzania.**
 
-> Running in production. Built on **Odoo 18**. Licensed LGPL-3.
-> This is the **root module** of the nestHMS suite — it installs standalone (depends only on
-> core Odoo: `mail`, `hr`, `product`, `stock`).
+The **Outpatient Department** module of **nestHMS**, a full Hospital Management System built on
+Odoo. It runs the entire outpatient journey — **Registration → Triage → Queue → Consultation →
+Vitals → Diagnosis → Discharge** — as one connected workflow, built for the realities of
+Tanzanian healthcare (NHIF/CHF insurance, cash-first payment rules, the 31-region structure).
+
+> Running in production · Built on **Odoo 18** · Licensed LGPL-3
+> The **root module** of the nestHMS suite — installs standalone (core Odoo only: `mail`, `hr`, `product`, `stock`).
+
+
+
+## See it in action
+
+**A live outpatient department running the full patient journey on Odoo 18.**
+
+![Today's OPD board — every active visit with triage colour, attending doctor, queue number and payer](screenshots/01-todays-opd.png)
+
+| Patient registration | 5-level colour-coded triage |
+|---|---|
+| ![Patient master record with Tanzania-specific fields](screenshots/05-patient-registration.png) | ![Triage acuity — Red / Orange / Yellow / Green / Black](screenshots/02-triage.png) |
+
+| Live queue board | Consultation workspace |
+|---|---|
+| ![Digital queue ordered by priority with wait tracking](screenshots/03-queue.png) | ![Vitals, clinical notes, ICD-10 diagnosis and discharge](screenshots/04-consultation.png) |
+
+| Insurance & payer schemes | ICD-10 diagnosis catalogue |
+|---|---|
+| ![NHIF, CHF and private scheme configuration](screenshots/06-insurance-schemes.png) | ![Preloaded ICD-10 code reference](screenshots/07-icd10.png) |
+
+---
+
+## The problem this solves
+
+A Tanzanian healthcare facility was running outpatient operations on paper and disconnected
+spreadsheets. There was no single record of a patient's journey through the building — so:
+
+- **Patients fell through the cracks** — no unified visit record; staff re-asked the same
+  questions and lost track of who was waiting, seen, or still owed money.
+- **Revenue leaked** — cash patients could reach a doctor without paying the consultation fee first.
+- **No triage discipline** — nothing enforced *who is most urgent*; sick patients waited behind routine ones.
+- **Insurance was manual** — NHIF / CHF / corporate payers tracked by hand, inviting rejected claims.
+- **Off-the-shelf software didn't fit** local healthcare realities.
+
+## What this module does
+
+- 🧑‍⚕️ **Patient master record** — Tanzania-specific fields (NHIF/CHF numbers, 31-region
+  administrative structure, next-of-kin), with paediatric and geriatric **auto-flagging** and allergy alerts.
+- 📝 **One controlled visit lifecycle** — Registration → Triage → Waiting → Consultation →
+  Investigation → Discharge → Completed, each stage timestamped. A patient **can't be registered
+  twice at once** — the system blocks a duplicate active visit.
+- 🚦 **5-level colour-coded triage** (Red / Orange / Yellow / Green / Black) with automatic
+  priority — the sickest patients rise to the top of the queue, not the first to arrive.
+- ⏱️ **Digital patient queue** with wait-time tracking, replacing the paper line.
+- 💳 **A revenue safeguard built into the workflow** — cash patients **cannot proceed to triage
+  until the consultation fee is collected**. Enforced by the system, not by staff memory.
+- ❤️ **Vital signs** capture per visit (BP, temperature, SpO₂, pulse, BMI, GCS, pain scale).
+- 🩺 **ICD-10 diagnosis** from a preloaded code set (primary / secondary / differential).
+- 🏦 **Insurance & payer support** — NHIF, CHF, private schemes (Jubilee, AAR, Britam, …) and
+  corporate self-insured, each with claims method, settlement days, and pre-authorization rules.
+- 📦 **Department requisition & consumables** — OPD draws consumables from its own store location
+  via a shared requisition sequence.
+- 🧾 **Service catalogue** — consultations, procedures, and lab tests modelled as Odoo products so
+  revenue routes cleanly into accounting.
+
+## The result
+
+- **In production across two facilities** — a referral hospital and a dispensary — running the full outpatient workflow daily.
+- **30+ staff** rely on the system day to day, across reception, triage, consultation, and administration.
+- **Replaced a patchwork of disconnected systems with one all-in-one ERP.** A major pain point was juggling several separate tools to get a single job done — nestHMS unified it, and this OPD module is the front door of that suite.
+- **Closed the cash-payment gap** — consultation fees are collected before the patient is seen, because the workflow won't advance until they are.
 
 ---
 
@@ -23,35 +86,18 @@ Pharmacy · Dental · Physiotherapy · Maternity · RCH · Emergency (EMD) · Am
 This repository publishes the **OPD & Patient Registration** module as an open-source work
 sample. The wider suite is proprietary.
 
-## What this module does
-
-- 🧑‍⚕️ **Patient master record** — Tanzania-specific fields (NHIF/CHF numbers, 31-region
-  administrative structure, next-of-kin), with paediatric and geriatric **auto-flagging**.
-- 📝 **OPD visit lifecycle** — Registration → Triage → Queue → Consultation → Discharge, each
-  stage tracked with timestamps.
-- 🚦 **Triage** with 5-level colour coding (Red / Orange / Yellow / Green / Black) for acuity.
-- ⏱️ **Digital patient queue** with wait-time tracking.
-- ❤️ **Vital signs** capture per visit.
-- 🩺 **ICD-10 diagnosis** recording from a preloaded code set.
-- 💳 **Insurance & payer support** — NHIF, CHF, private schemes (Jubilee, AAR, Britam, …) and
-  corporate self-insured, each with claims method, settlement days, and pre-authorization rules.
-- 📦 **Department requisition & consumables** — OPD draws consumables from its own store
-  location via a shared requisition sequence.
-- 🧾 **Service catalogue** — consultations, procedures, and lab tests modelled as Odoo products
-  so revenue routes cleanly into accounting.
-
 ## Technical highlights
 
-- Clean **domain model** split across patient, visit, triage, queue, vitals, procedure, ICD-10,
-  visit-type, insurance-scheme and requisition models.
-- **Registration & visit-launcher wizards** that guide front-desk staff through a fast,
-  validated intake flow.
-- **Security groups & record rules** scoping access to clinical vs. front-desk vs.
-  administrative roles.
-- **Preloaded Tanzania reference data** — 31 regions, ICD-10 codes, national + private
-  insurance schemes, visit types, and OPD service catalogue — so the module is usable on install.
-- Designed with real **clinical domain knowledge** (the author's background is nursing), which
-  is why the triage, acuity, and payer logic map to how hospitals actually operate.
+- Clean **state machine** on the visit model, with an ORM-level `create` guard that blocks a
+  second active visit per patient, and a **payment-gated triage action** for cash payers.
+- **Domain model** split across patient, visit, triage, queue, vitals, procedure, ICD-10,
+  visit-type, insurance-scheme and requisition models; computed billing-balance and latest-vitals fields.
+- **Registration & visit-launcher wizards** that guide front-desk staff through a fast, validated intake.
+- **Security groups & record rules** scoping access to clinical vs. front-desk vs. administrative roles.
+- **Preloaded Tanzania reference data** — 31 regions, ICD-10 codes, national + private insurance
+  schemes, visit types, and OPD service catalogue — so the module is usable on install.
+- Built with real **clinical domain knowledge** (the author's background is nursing), which is why
+  the triage, acuity, and payer logic map to how hospitals actually operate.
 
 ## Repository structure
 
@@ -71,41 +117,6 @@ odoo_hms_opd/
 3. Open the **nestHMS / OPD** menu to register a patient and start a visit.
 
 **Requires:** `mail`, `hr`, `product`, `stock` (core Odoo only).
-
-## Screenshots
-
-**Today's OPD board** — every visit for the day with triage colour, attending doctor, queue
-number and payer type at a glance.
-
-![Today's OPD board](screenshots/01-todays-opd.png)
-
-**Triage — 5-level colour acuity**
-Red / Orange / Yellow / Green / Black with priority score, expected wait and mode of arrival.
-
-![Triage colour acuity](screenshots/02-triage.png)
-
-**Digital patient queue** — live queue ordered by acuity, with wait tracking and call/skip.
-
-![OPD queue board](screenshots/03-queue.png)
-
-**Consultation / visit record** — the full clinical workspace: vitals, consultation, clinical
-notes, diagnosis, procedures, management plan, prescriptions, radiology, lab and discharge.
-
-![Consultation form](screenshots/04-consultation.png)
-
-**Patient master record** — Tanzania-specific location, next-of-kin, emergency contact,
-insurance details, and allergy / chronic-condition / OPD-history tabs.
-
-![Patient master record](screenshots/05-patient-registration.png)
-
-**Insurance schemes** — NHIF, CHF and private payers with claims method, settlement days and
-pre-authorization rules.
-
-![Insurance schemes](screenshots/06-insurance-schemes.png)
-
-**ICD-10 diagnosis codes** — a preloaded, categorised code set for structured diagnosis.
-
-![ICD-10 codes](screenshots/07-icd10.png)
 
 ---
 
